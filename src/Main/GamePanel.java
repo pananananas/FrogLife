@@ -11,7 +11,7 @@ public class GamePanel extends JPanel{
 
     private MouseInputs mouseInputs;
     private float xDelta = 100, yDelta = 100;
-    private float xDir = 0.3f, yDir = 0.3f;
+    private float xDir = 2.0f, yDir = 2.0f;
     private int frames = 0;
     private long lastCheck = System.currentTimeMillis();
 
@@ -52,7 +52,6 @@ public class GamePanel extends JPanel{
             frames = 0;
         }
 
-        repaint();
     }
     private void updateRectangle() {
         xDelta += xDir;
