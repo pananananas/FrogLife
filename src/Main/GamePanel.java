@@ -28,7 +28,6 @@ public class GamePanel extends JPanel{
     private boolean playerMoving = false;
 
 
-
     public GamePanel() {
         mouseInputs = new MouseInputs(this);
 
@@ -50,12 +49,15 @@ public class GamePanel extends JPanel{
         this.playerMoving = moving;
     }
 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);    // paint background, clean frame
-        updateAnimationTick();
+    public void updateGame() {                  // update game logic
 
+        updateAnimationTick();
         setAnimation();
         updatePosition();
+    }
+
+    public void paintComponent(Graphics g) {    // draw graphics
+        super.paintComponent(g);    // paint background, clean frame
 
         g.drawImage(animations[playerAction][animationIndex], (int)xDelta, (int)yDelta, 3 * spriteWidth, 3 * spriteHeight, null);
     }
