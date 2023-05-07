@@ -13,15 +13,19 @@ import java.io.InputStream;
 public class GamePanel extends JPanel{
 
     private int windowWidth = 1280, windowHeight = 720;
+    private int spriteWidth = 64, spriteHeight = 40;
 
     private MouseInputs mouseInputs;
     private float xDelta = 100, yDelta = 100;
-    private BufferedImage image, subImage;
+    private BufferedImage image;
+    private BufferedImage[][] animations;
+    private int animationTick = 0, animationIndex = 0, animationSpeed = 15;
 
     public GamePanel() {
         mouseInputs = new MouseInputs(this);
 
         importImage();
+        loadAnimations();
 
         setPanelSize(windowWidth, windowHeight);
         addKeyListener(new KeyboardInputs(this));
@@ -45,9 +49,9 @@ public class GamePanel extends JPanel{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);    // paint background, clean frame
 
-        subImage = image.getSubimage(1 * 64, 8 * 40, 64, 40);
+        updateAnimationTick();
 
-        g.drawImage(subImage, (int)xDelta, (int)yDelta, 128, 80, null);
+        g.drawImage(animations[1][animationIndex], (int)xDelta, (int)yDelta, 2 * spriteWidth, 2 * spriteHeight, null);
         
     }
 
@@ -57,6 +61,34 @@ public class GamePanel extends JPanel{
             image = ImageIO.read(is);
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private void loadAnimations() {
+        animations = new BufferedImage[9][6];
+
+        for ( int j = 0; j < animations.length; j++) {
+            for (int i = 0; i < animations[j].length; i++) {
+                animations[j][i] = image.getSubimage(i * spriteWidth, j * spriteHeight, spriteWidth, spriteHeight);
+            }
+        }
+
+    }
+
+    private void updateAnimationTick() {
+        animationTick++;
+        if (animationTick >= animationSpeed) {
+            animationTick = 0;
+            animationIndex++;
+            if (animationIndex >= 6) {
+                animationIndex = 0;
+            }
         }
     }
 
