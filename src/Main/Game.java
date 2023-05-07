@@ -42,10 +42,8 @@ public class Game implements Runnable {
         double deltaU = 0;
         double deltaF = 0;
 
-
         while (true) {
             try {
-
                 long currentTime = System.nanoTime();
 
                 deltaU += (currentTime - previousTime) / timePerUpdate;

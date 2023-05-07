@@ -106,15 +106,15 @@ public class GamePanel extends JPanel{
     private void updatePosition() {
         if (playerMoving)
             switch (playerDirection) {
-                case LEFT -> xDelta -= 3;
-                case UP -> yDelta -= 3;
-                case DOWN -> yDelta += 3;
-                case RIGHT -> xDelta += 3;
+                case LEFT -> xDelta -= 2;
+                case UP -> yDelta -= 2;
+                case DOWN -> yDelta += 2;
+                case RIGHT -> xDelta += 2;
             }
     }
 
-    private void setPanelSize(int wid, int hei) {
-        Dimension size = new Dimension(wid, hei);
+    private void setPanelSize(int width, int heigth) {
+        Dimension size = new Dimension(width, heigth);
         setMinimumSize(size);
         setPreferredSize(size);
         setMaximumSize(size);
