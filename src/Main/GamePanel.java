@@ -2,9 +2,13 @@ package Main;
 
 import Inputs.KeyboardInputs;
 import Inputs.MouseInputs;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class GamePanel extends JPanel{
 
@@ -12,15 +16,13 @@ public class GamePanel extends JPanel{
 
     private MouseInputs mouseInputs;
     private float xDelta = 100, yDelta = 100;
-    private float xDir = 2.0f, yDir = 2.0f;
+    private BufferedImage image, subImage;
 
-
-    private Color color = new Color(69,102,23);
-
-    private Random random;
     public GamePanel() {
-        random = new Random();
         mouseInputs = new MouseInputs(this);
+
+        importImage();
+
         setPanelSize(windowWidth, windowHeight);
         addKeyListener(new KeyboardInputs(this));
         addMouseListener(mouseInputs);
@@ -30,6 +32,7 @@ public class GamePanel extends JPanel{
     public void changeXDelta(int value) {
         xDelta += value;
     }
+
     public void changeYDelta(int value) {
         yDelta += value;
     }
@@ -42,31 +45,21 @@ public class GamePanel extends JPanel{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);    // paint background, clean frame
 
-        updateRectangle();
+        subImage = image.getSubimage(1 * 64, 8 * 40, 64, 40);
 
-        g.setColor(color);
-        g.fillRect((int)xDelta, (int)yDelta, 100, 100);
+        g.drawImage(subImage, (int)xDelta, (int)yDelta, 128, 80, null);
+        
     }
-    private void updateRectangle() {
-        xDelta += xDir;
-        if (xDelta >= 1280 - 100 || xDelta <= 0) {
-            xDir *= -1;
-            color = getRandomColor();
-        }
 
-        yDelta += yDir;
-        if (yDelta >= 720 - 100 || yDelta <= 0) {
-            yDir *= -1;
-            color = getRandomColor();
+    private void importImage() {
+        InputStream is = getClass().getResourceAsStream("/Resources/player_sprites.png");
+        try {
+            image = ImageIO.read(is);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-    private Color getRandomColor() {
-        int r = random.nextInt(255);
-        int g = random.nextInt(255);
-        int b = random.nextInt(255);
 
-        return new Color(r, g, b);
-    }
     private void setPanelSize(int wid, int hei) {
         Dimension size = new Dimension(wid, hei);
         setMinimumSize(size);
