@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.channels.UnsupportedAddressTypeException;
 
 import static Utilities.Constants.PlayerConstants.*;
 import static Utilities.Constants.Directions.*;
