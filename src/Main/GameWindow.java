@@ -7,9 +7,10 @@ public class GameWindow {
     public GameWindow(GamePanel gamePanel) {
         jframe = new JFrame("Frog life");
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jframe.setSize(1280, 720);
-        jframe.setLocationRelativeTo(null);     // center window
         jframe.add(gamePanel);
+        jframe.setResizable(false);
+        jframe.pack();
+        jframe.setLocationRelativeTo(null);     // center window
         jframe.setVisible(true);
     }
 }

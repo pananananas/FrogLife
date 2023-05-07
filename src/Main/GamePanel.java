@@ -2,12 +2,13 @@ package Main;
 
 import Inputs.KeyboardInputs;
 import Inputs.MouseInputs;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
 public class GamePanel extends JPanel{
+
+    private int windowWidth = 1280, windowHeight = 720;
 
     private MouseInputs mouseInputs;
     private float xDelta = 100, yDelta = 100;
@@ -15,10 +16,12 @@ public class GamePanel extends JPanel{
 
 
     private Color color = new Color(69,102,23);
+
     private Random random;
     public GamePanel() {
         random = new Random();
         mouseInputs = new MouseInputs(this);
+        setPanelSize(windowWidth, windowHeight);
         addKeyListener(new KeyboardInputs(this));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
@@ -63,6 +66,12 @@ public class GamePanel extends JPanel{
         int b = random.nextInt(255);
 
         return new Color(r, g, b);
+    }
+    private void setPanelSize(int wid, int hei) {
+        Dimension size = new Dimension(wid, hei);
+        setMinimumSize(size);
+        setPreferredSize(size);
+        setMaximumSize(size);
     }
 }
 
