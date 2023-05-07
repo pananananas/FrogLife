@@ -10,6 +10,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static Utilities.Constants.PlayerConstants.*;
+
 public class GamePanel extends JPanel{
 
     private int windowWidth = 1280, windowHeight = 720;
@@ -20,6 +22,8 @@ public class GamePanel extends JPanel{
     private BufferedImage image;
     private BufferedImage[][] animations;
     private int animationTick = 0, animationIndex = 0, animationSpeed = 15;
+    private int playerAction = RUNNING;
+
 
     public GamePanel() {
         mouseInputs = new MouseInputs(this);
@@ -51,7 +55,7 @@ public class GamePanel extends JPanel{
 
         updateAnimationTick();
 
-        g.drawImage(animations[1][animationIndex], (int)xDelta, (int)yDelta, 2 * spriteWidth, 2 * spriteHeight, null);
+        g.drawImage(animations[playerAction][animationIndex], (int)xDelta, (int)yDelta, 3 * spriteWidth, 3 * spriteHeight, null);
         
     }
 
@@ -86,7 +90,7 @@ public class GamePanel extends JPanel{
         if (animationTick >= animationSpeed) {
             animationTick = 0;
             animationIndex++;
-            if (animationIndex >= 6) {
+            if (animationIndex >= getSpriteAmount(playerAction)) {
                 animationIndex = 0;
             }
         }
