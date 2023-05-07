@@ -9,8 +9,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.channels.UnsupportedAddressTypeException;
 
 import static Utilities.Constants.PlayerConstants.*;
+import static Utilities.Constants.Directions.*;
 
 public class GamePanel extends JPanel{
 
@@ -22,7 +24,10 @@ public class GamePanel extends JPanel{
     private BufferedImage image;
     private BufferedImage[][] animations;
     private int animationTick = 0, animationIndex = 0, animationSpeed = 15;
-    private int playerAction = RUNNING;
+    private int playerAction = IDLE;
+    private int playerDirection = -1;
+    private boolean playerMoving = false;
+
 
 
     public GamePanel() {
@@ -37,26 +42,23 @@ public class GamePanel extends JPanel{
         addMouseMotionListener(mouseInputs);
     }
 
-    public void changeXDelta(int value) {
-        xDelta += value;
+    public void setDirection(int direction) {
+        this.playerDirection = direction;
+        playerMoving = true;
     }
-
-    public void changeYDelta(int value) {
-        yDelta += value;
-    }
-
-    public void setRectPos(int x, int y) {
-        xDelta = x;
-        yDelta = y;
+    
+    public void setMoving(boolean moving) {
+        this.playerMoving = moving;
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);    // paint background, clean frame
-
         updateAnimationTick();
 
+        setAnimation();
+        updatePosition();
+
         g.drawImage(animations[playerAction][animationIndex], (int)xDelta, (int)yDelta, 3 * spriteWidth, 3 * spriteHeight, null);
-        
     }
 
     private void importImage() {
@@ -82,7 +84,11 @@ public class GamePanel extends JPanel{
                 animations[j][i] = image.getSubimage(i * spriteWidth, j * spriteHeight, spriteWidth, spriteHeight);
             }
         }
+    }
 
+    private void setAnimation() {
+        if (playerMoving)   playerAction = RUNNING;
+        else                playerAction = IDLE;
     }
 
     private void updateAnimationTick() {
@@ -94,6 +100,16 @@ public class GamePanel extends JPanel{
                 animationIndex = 0;
             }
         }
+    }
+
+    private void updatePosition() {
+        if (playerMoving)
+            switch (playerDirection) {
+                case LEFT -> xDelta -= 3;
+                case UP -> yDelta -= 3;
+                case DOWN -> yDelta += 3;
+                case RIGHT -> xDelta += 3;
+            }
     }
 
     private void setPanelSize(int wid, int hei) {
