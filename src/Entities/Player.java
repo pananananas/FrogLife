@@ -16,8 +16,10 @@ public class Player extends Entity {
 
     private int animationTick = 0, animationIndex = 0, animationSpeed = 30;
     private int playerAction = IDLE;
-    private int playerDirection = -1;
-    private boolean playerMoving = false;
+
+    private boolean left, right, up, down, playerMoving = false;
+
+    private float playerSpeed = 2.0f;
 
     public Player(float x, float y) {
         super(x, y);
@@ -30,21 +32,9 @@ public class Player extends Entity {
         setAnimation();
         updatePosition();
     }
-    
+
     public void render(Graphics g) {
         g.drawImage(animations[playerAction][animationIndex], (int)x, (int)y, 3 * spriteWidth, 3 * spriteHeight, null);
-    }
-
-
-
-
-    public void setDirection(int direction) {
-        this.playerDirection = direction;
-        playerMoving = true;
-    }
-    
-    public void setMoving(boolean moving) {
-        this.playerMoving = moving;
     }
 
     private void setAnimation() {
@@ -64,13 +54,24 @@ public class Player extends Entity {
     }
 
     private void updatePosition() {
-        if (playerMoving)
-            switch (playerDirection) {
-                case LEFT -> x -= 2;
-                case UP -> y -= 2;
-                case DOWN -> y += 2;
-                case RIGHT -> x += 2;
-            }
+
+        playerMoving = false;
+
+        if (left && !right) {
+            x -= playerSpeed;
+            playerMoving = true;
+        } else if (right && !left) {
+            x += playerSpeed;
+            playerMoving = true;
+        } 
+
+        if (up && !down) {
+            y -= playerSpeed;
+            playerMoving = true;
+        } else if (down && !up){ 
+            y += playerSpeed;
+            playerMoving = true;
+        }
     }
     
     private void loadAnimations() {
@@ -97,6 +98,36 @@ public class Player extends Entity {
         }
     }
 
+    public void setLeft(boolean left) {
+        this.left = left;
+    }
 
+    public void setRight(boolean right) {
+        this.right = right;
+    }
+
+    public void setUp(boolean up) {
+        this.up = up;
+    }
+
+    public void setDown(boolean down) {
+        this.down = down;
+    }
+
+    public boolean isLeft() {
+        return left;
+    }
+
+    public boolean isRight() {
+        return right;
+    }
+
+    public boolean isUp() {
+        return up;
+    }
+
+    public boolean isDown() {
+        return down;
+    }
 
 }
