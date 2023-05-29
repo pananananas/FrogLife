@@ -7,7 +7,6 @@ import javax.imageio.ImageIO;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import static Utilities.Constants.PlayerConstants.*;
-import static Utilities.Constants.Directions.*;
 
 public class Player extends Entity {
     
