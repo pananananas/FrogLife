@@ -1,5 +1,9 @@
 package Main;
 
+import java.awt.Graphics;
+
+import Entities.Player;
+
 public class Game implements Runnable {
     private GameWindow gameWindow;
     private GamePanel gamePanel;
@@ -7,12 +11,22 @@ public class Game implements Runnable {
     private final int FPS_SET = 120;
     private final int UPS_SET = 240;
 
+    private Player player;
+
 
     public Game() {
-        gamePanel = new GamePanel();
+        initClasses();
+
+        gamePanel = new GamePanel(this);
         gameWindow = new GameWindow(gamePanel);
-        gamePanel.requestFocus();
+        gamePanel.requestFocus(); 
+
         startGameLoop();
+    }
+
+    private void initClasses() {
+        player = new Player(100, 100);
+
     }
 
     private void startGameLoop() {
@@ -23,15 +37,19 @@ public class Game implements Runnable {
     }
 
     private void update() {
+        player.update();
+        // gamePanel.updateGame();
+    }
 
-        gamePanel.updateGame();
+    public void render(Graphics g) {
+        player.render(g);
     }
 
     @Override
     public void run() {
 
-        double timePerFrame = 1000000000.0 / FPS_SET;   // how long will frame last in ns ( 1s = 1 000 000 000ns )
-        double timePerUpdate = 1000000000.0 / UPS_SET;  // how long will update last in ns ( 1s = 1 000 000 000ns )
+        double timePerFrame  = 1000000000.0 / FPS_SET;  // how long will frame last in ns
+        double timePerUpdate = 1000000000.0 / UPS_SET;  // how long will update last in ns
 
         long previousTime = System.nanoTime();
 
@@ -74,5 +92,9 @@ public class Game implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }
