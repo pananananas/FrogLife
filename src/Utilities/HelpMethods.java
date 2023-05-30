@@ -4,7 +4,7 @@ import Main.Game;
 
 public class HelpMethods {
     
-    public static boolean canMoveHere(float x, float y, int width, int height, int [][] lvlData) {
+    public static boolean canMoveHere(float x, float y, float width, float height, int [][] lvlData) {
         
         if (!isSolid(x, y, lvlData))
             if (!isSolid(x + width, y + height, lvlData))
@@ -18,10 +18,8 @@ public class HelpMethods {
 
     private static boolean isSolid(float x, float y, int [][] lvlData) {
 
-        if (x < 0 || x >= Game.GAME_WIDTH)
-            return true;
-        if (y < 0 || y >= Game.GAME_HEIGHT)
-            return true;
+        if (x < 0 || x >= Game.GAME_WIDTH)      return true;
+        if (y < 0 || y >= Game.GAME_HEIGHT)     return true;
         
         float xIndex = x / Game.TILES_SIZE;
         float yIndex = y / Game.TILES_SIZE;
