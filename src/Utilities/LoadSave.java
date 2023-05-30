@@ -46,6 +46,11 @@ public class LoadSave {
                     value = 0;
                 lvlData[j][i] = value;
             }
+        for (int j = 0; j < lvlData.length; j++) {
+            for (int i = 0; i < lvlData[0].length; i++) 
+                System.out.print(lvlData[j][i] + " \t");
+            System.out.println();
+        }
 
         return lvlData;
     }

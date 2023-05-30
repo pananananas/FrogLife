@@ -1,11 +1,7 @@
 package Entities;
 
-import java.io.IOException;
 import java.io.InputStream;
-import javax.imageio.ImageIO;
-
 import Utilities.LoadSave;
-
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import static Utilities.Constants.PlayerConstants.*;
@@ -22,8 +18,8 @@ public class Player extends Entity {
 
     private float playerSpeed = 2.0f;
 
-    public Player(float x, float y) {
-        super(x, y);
+    public Player(float x, float y, int width, int height) {
+        super(x, y, width, height);
         loadAnimations();
     }
 
@@ -35,7 +31,7 @@ public class Player extends Entity {
     }
 
     public void render(Graphics g) {
-        g.drawImage(animations[playerAction][animationIndex], (int)x, (int)y, 3 * spriteWidth, 3 * spriteHeight, null);
+        g.drawImage(animations[playerAction][animationIndex], (int)x, (int)y, width, height, null);
     }
 
     private void setAnimation() {
@@ -90,8 +86,6 @@ public class Player extends Entity {
     }
     
     private void loadAnimations() {
-
-        InputStream is = getClass().getResourceAsStream("/Resources/player_sprites.png");
 
         BufferedImage image = LoadSave.getSpriteAtlas(LoadSave.PLAYER_ATLAS);
 
