@@ -1,10 +1,10 @@
 package Entities;
 
-import java.io.InputStream;
 import Utilities.LoadSave;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import static Utilities.Constants.PlayerConstants.*;
+import static Utilities.HelpMethods.canMoveHere;
 
 public class Player extends Entity {
     
@@ -18,6 +18,8 @@ public class Player extends Entity {
 
     private float playerSpeed = 2.0f;
 
+    private int [][] lvlData;
+
     public Player(float x, float y, int width, int height) {
         super(x, y, width, height);
         loadAnimations();
@@ -28,10 +30,12 @@ public class Player extends Entity {
         updateAnimationTick();
         setAnimation();
         updatePosition();
+        updateHitbox();
     }
 
     public void render(Graphics g) {
         g.drawImage(animations[playerAction][animationIndex], (int)x, (int)y, width, height, null);
+        drawHitbox(g);
     }
 
     private void setAnimation() {
@@ -68,21 +72,24 @@ public class Player extends Entity {
 
         playerMoving = false;
 
-        if (left && !right) {
-            x -= playerSpeed;
-            playerMoving = true;
-        } else if (right && !left) {
-            x += playerSpeed;
-            playerMoving = true;
-        } 
+        if (!left && !right && !up && !down)    
+            return;
+        
+        float xSpeed = 0;
+        float ySpeed = 0;
 
-        if (up && !down) {
-            y -= playerSpeed;
-            playerMoving = true;
-        } else if (down && !up){ 
-            y += playerSpeed;
+
+        if (left && !right)         xSpeed = -playerSpeed;
+        else if (right && !left)    xSpeed = playerSpeed;
+        if (up && !down)            ySpeed = -playerSpeed;
+        else if (down && !up)       ySpeed = playerSpeed;
+        
+        if (canMoveHere(x + xSpeed, y + ySpeed, width, height, lvlData)) {
+            x += xSpeed;
+            y += ySpeed;
             playerMoving = true;
         }
+
     }
     
     private void loadAnimations() {
@@ -94,6 +101,10 @@ public class Player extends Entity {
         for ( int j = 0; j < animations.length; j++) 
             for (int i = 0; i < animations[j].length; i++) 
                 animations[j][i] = image.getSubimage(i * spriteWidth, j * spriteHeight, spriteWidth, spriteHeight);
+    }
+
+    public void loadLevelData(int[][] lvlData) {
+        this.lvlData = lvlData;
     }
 
     public void setAttack(boolean attacking) {
