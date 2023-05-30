@@ -93,7 +93,7 @@ public class Player extends Entity {
 
         InputStream is = getClass().getResourceAsStream("/Resources/player_sprites.png");
 
-        BufferedImage image = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
+        BufferedImage image = LoadSave.getSpriteAtlas(LoadSave.PLAYER_ATLAS);
 
         animations = new BufferedImage[9][6];
 
