@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
 
+import Utilities.LoadSave;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import static Utilities.Constants.PlayerConstants.*;
@@ -90,25 +92,14 @@ public class Player extends Entity {
     private void loadAnimations() {
 
         InputStream is = getClass().getResourceAsStream("/Resources/player_sprites.png");
-        try {
-            BufferedImage image = ImageIO.read(is);
 
-            animations = new BufferedImage[9][6];
+        BufferedImage image = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
 
-            for ( int j = 0; j < animations.length; j++) 
-                for (int i = 0; i < animations[j].length; i++) 
-                    animations[j][i] = image.getSubimage(i * spriteWidth, j * spriteHeight, spriteWidth, spriteHeight);
-                
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
+        animations = new BufferedImage[9][6];
+
+        for ( int j = 0; j < animations.length; j++) 
+            for (int i = 0; i < animations[j].length; i++) 
+                animations[j][i] = image.getSubimage(i * spriteWidth, j * spriteHeight, spriteWidth, spriteHeight);
     }
 
     public void setAttack(boolean attacking) {
