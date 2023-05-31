@@ -19,7 +19,8 @@ public class Player extends Entity {
 
     private boolean left, right, up, down, playerMoving = false, playerAttacking = false;
 
-    private float playerSpeed = 2.0f;
+    private float playerSpeed = 1f;
+
 
     private int [][] lvlData;
 
@@ -89,11 +90,10 @@ public class Player extends Entity {
         if (up && !down)            ySpeed = -playerSpeed;
         else if (down && !up)       ySpeed = playerSpeed;
         
-        // if (canMoveHere(x + xSpeed, y + ySpeed, width, height, lvlData)) {
-        //     x += xSpeed;
-        //     y += ySpeed;
-        //     playerMoving = true;
-        // }
+        if (xSpeed != 0 && ySpeed != 0) {
+            xSpeed /= 1.414f;
+            ySpeed /= 1.414f;
+        }
 
         if (canMoveHere(hitbox.x + xSpeed, hitbox.y + ySpeed, hitbox.width, hitbox.height, lvlData)) {
             hitbox.x += xSpeed;
