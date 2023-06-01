@@ -2,6 +2,7 @@ package Main;
 
 import java.awt.Graphics;
 
+import Entities.EnemyManager;
 import Entities.Player;
 import Levels.LevelManager;
 
@@ -14,10 +15,12 @@ public class Game implements Runnable {
 
     private Player player;
     private LevelManager LevelManager;
+    private EnemyManager EnemyManager;
 
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static float SCALE = 1.5f;
     public final static float PLAYER_SCALE = 1.5f * SCALE;
+    public final static float ENEMY_SCALE = 1.5f * SCALE;
     public final static int TILES_IN_WIDTH = 26;
     public final static int TILES_IN_HEIGHT = 26;
     public final static int TILES_SIZE  = (int) (TILES_DEFAULT_SIZE * SCALE);
@@ -36,6 +39,7 @@ public class Game implements Runnable {
 
     private void initClasses() {
         LevelManager = new LevelManager(this);
+        EnemyManager = new EnemyManager(this);
         player = new Player(200, 200, (int) (64 * PLAYER_SCALE), (int) (40 * PLAYER_SCALE));
         player.loadLevelData(LevelManager.getCurrentData().getLevelData());
 
@@ -50,6 +54,7 @@ public class Game implements Runnable {
 
     private void update() {
         player.update();
+        EnemyManager.update();
         LevelManager.update();
     }
 
@@ -57,6 +62,7 @@ public class Game implements Runnable {
         
         LevelManager.draw(g);
         player.render(g);
+        EnemyManager.draw(g);
     }
 
     @Override

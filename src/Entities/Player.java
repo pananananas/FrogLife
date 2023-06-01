@@ -93,7 +93,6 @@ public class Player extends Entity {
             ySpeed /= 1.414f;
         }
     
-        // Check for X and Y movements separately
         if (canMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, lvlData)) {
             hitbox.x += xSpeed;
             playerMoving = true;
