@@ -76,15 +76,13 @@ public class Player extends Entity {
 
     private void updatePosition() {
 
-        playerMoving = false;
-
-        if (!left && !right && !up && !down)    
+        if (!left && !right && !up && !down) {
+            playerMoving = false;
             return;
-        
+        }
         float xSpeed = 0;
         float ySpeed = 0;
-
-
+    
         if (left && !right)         xSpeed = -playerSpeed;
         else if (right && !left)    xSpeed = playerSpeed;
         if (up && !down)            ySpeed = -playerSpeed;
@@ -94,13 +92,16 @@ public class Player extends Entity {
             xSpeed /= 1.414f;
             ySpeed /= 1.414f;
         }
-
-        if (canMoveHere(hitbox.x + xSpeed, hitbox.y + ySpeed, hitbox.width, hitbox.height, lvlData)) {
+    
+        // Check for X and Y movements separately
+        if (canMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, lvlData)) {
             hitbox.x += xSpeed;
+            playerMoving = true;
+        }
+        if (canMoveHere(hitbox.x, hitbox.y + ySpeed, hitbox.width, hitbox.height, lvlData)) {
             hitbox.y += ySpeed;
             playerMoving = true;
         }
-
     }
     
     private void loadAnimations() {

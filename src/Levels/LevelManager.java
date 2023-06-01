@@ -12,6 +12,7 @@ public class LevelManager {
     private Game game;
     private BufferedImage levelSprite[];
     private Level levelOne;
+    BufferedImage bgImage;
 
     public LevelManager(Game game) {
         this.game = game;
@@ -23,6 +24,7 @@ public class LevelManager {
     private void importOutsideSprites() {
 
         BufferedImage tmpImage = LoadSave.getSpriteAtlas(LoadSave.LEVEL_ATLAS);
+        bgImage = LoadSave.getSpriteAtlas(LoadSave.BG_IMAGE);
         levelSprite = new BufferedImage[48];
         for (int j = 0; j < 4; j++) {
             for (int i = 0; i < 12; i++) {
@@ -35,6 +37,7 @@ public class LevelManager {
     }
 
     public void draw(Graphics g) {
+        g.drawImage(bgImage, 0, 0, Game.GAME_HEIGHT, Game.GAME_WIDTH, null);
         for (int j = 0; j < Game.TILES_IN_HEIGHT; j++) 
             for (int i = 0; i < Game.TILES_IN_WIDTH; i++) {
                 int spriteIndex = levelOne.getSpriteIndex(i, j);
