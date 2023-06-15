@@ -1,6 +1,7 @@
 package Entities;
 
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 
 import static Utilities.Constants.EnemyConstants.*;
 import static Utilities.Constants.Directions.*;
@@ -12,27 +13,35 @@ public abstract class Enemy extends Entity {
     protected int enemyState, enemyType;
     protected int animationIndex, animationTick, animationSpeed = 25;
 
-    protected float walkSpeed = .5f * Game.ENEMY_SCALE;
+    protected float walkSpeed = .3f * Game.ENEMY_SCALE;
     protected int walkDirection = LEFT;
     protected float attackDistance = Game.TILES_SIZE;
     protected float sightDistance = Game.TILES_SIZE * 5;
 
+    protected int maxHealth;
+    protected int currentHealth;
+    protected boolean acitve = true;
+    protected boolean attackChecked = false;
 
     public Enemy(float x, float y, int width, int height, int enemyType) {
         super(x, y, width, height);
         this.enemyType = enemyType;
         initHitbox(x, y, width, height);
+        maxHealth = getMaxHealth(enemyType);
+        currentHealth = maxHealth;
     }
 
-    private void updateAnimationTick() {
+    protected void updateAnimationTick() {
         animationTick++;
         if (animationTick >= animationSpeed) {
             animationTick = 0;
             animationIndex++;
             if (animationIndex >= getSpriteAmount(enemyType, enemyState)) {
                 animationIndex = 0;
-                if (enemyState == ATTACK) {
-                    newState(IDLE);
+
+                switch (enemyState) {
+                    case ATTACK, HIT -> newState(IDLE);
+                    case DEAD        -> acitve = false;
                 }
             }
         }
@@ -40,7 +49,7 @@ public abstract class Enemy extends Entity {
 
     public void update(int[][] levelData) {
         
-        updateAnimationTick();
+        // updateAnimationTick();
         
     }
 
@@ -63,10 +72,26 @@ public abstract class Enemy extends Entity {
         changeWalkDir();
     }
 
+    protected void checkEnemyHit(Rectangle2D.Float attackBox, Player player) {
+        if (attackBox.intersects(player.hitbox)) 
+            player.changeHealth(-getEnemyDamage(enemyType));
+        attackChecked = true;
+    }
+
     protected void newState(int enemyState) {
         this.enemyState = enemyState;
         animationIndex = 0;
         animationTick = 0;
+    }
+
+    public void hurt(int damage) {
+        currentHealth -= damage;
+        if (currentHealth <= 0) {
+            currentHealth = 0;
+            newState(DEAD);
+        } else {
+            newState(HIT);
+        }
     }
 
     protected void turnTowardsPlayer(Player player) {
@@ -134,5 +159,9 @@ public abstract class Enemy extends Entity {
     
     public int getEnemyState() {
         return enemyState;
+    }
+
+    public boolean isActive() {
+        return acitve;
     }
 }

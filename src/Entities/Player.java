@@ -15,7 +15,8 @@ import static Utilities.HelpMethods.canMoveHere;
 public class Player extends Entity {
     
     private int [][] lvlData;
-    
+    private Game game;
+
     
     // Player sprites and animations
 
@@ -55,27 +56,40 @@ public class Player extends Entity {
     // Attack variables
 
     private Rectangle2D.Float attackBox;
+    private boolean attackChecked = false;
 
     private int flipX = 0;
     private int flipW = 1;
 
+    
 
-
-
-    public Player(float x, float y, int width, int height) {
+    public Player(float x, float y, int width, int height, Game game) {
         super(x, y, width, height);
+        this.game = game;
         loadAnimations();
         initHitbox(x, y, 21 * Game.PLAYER_SCALE, 28 * Game.PLAYER_SCALE);
         initAttackBox();
     }
 
     public void update() {
-        
+        if (currentHealth <= 0) {
+            game.setGameOver(true);
+            return;
+        }
         updateHealthBar();
         updateAttackBox();
         updateAnimationTick();
         setAnimation();
         updatePosition();
+        if (playerAttacking)
+            checkAttack();
+    }
+
+    private void checkAttack() {
+        if (attackChecked || animationIndex != 1)
+            return;
+        attackChecked = true;
+        game.checkEnemyHit(attackBox);
     }
 
     private void updateAttackBox() {
@@ -122,7 +136,14 @@ public class Player extends Entity {
 
         if (playerMoving)    playerAction = RUNNING;
         else                 playerAction = IDLE;
-        if (playerAttacking) playerAction = ATTACK;
+        if (playerAttacking) { 
+            playerAction = ATTACK;
+            if (startAnimation != ATTACK) {
+                animationIndex = 1;
+                animationTick = 0;
+                return;
+            }
+        }
 
         if (startAnimation != playerAction) {
             resetAnimationTick();
@@ -137,6 +158,7 @@ public class Player extends Entity {
             if (animationIndex >= getSpriteAmount(playerAction)) {
                 animationIndex = 0;
                 playerAttacking = false;
+                attackChecked = false;
             }
         }
     }

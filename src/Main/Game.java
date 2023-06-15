@@ -1,6 +1,7 @@
 package Main;
 
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 
 import Entities.EnemyManager;
 import Entities.Player;
@@ -16,6 +17,7 @@ public class Game implements Runnable {
     private Player player;
     private LevelManager LevelManager;
     private EnemyManager EnemyManager;
+    private GameOver     GameOver;
 
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static float SCALE = 1.5f;
@@ -26,6 +28,8 @@ public class Game implements Runnable {
     public final static int TILES_SIZE  = (int) (TILES_DEFAULT_SIZE * SCALE);
     public final static int GAME_WIDTH  = TILES_IN_WIDTH * TILES_SIZE;
     public final static int GAME_HEIGHT = TILES_IN_HEIGHT * TILES_SIZE;
+
+    private boolean gameOver = false;
     
     public Game() {
         initClasses();
@@ -40,9 +44,9 @@ public class Game implements Runnable {
     private void initClasses() {
         LevelManager = new LevelManager(this);
         EnemyManager = new EnemyManager(this);
-        player = new Player(200, 200, (int) (64 * PLAYER_SCALE), (int) (40 * PLAYER_SCALE));
+        player = new Player((int) (GAME_WIDTH / 2), 1100, (int) (64 * PLAYER_SCALE), (int) (40 * PLAYER_SCALE), this);
         player.loadLevelData(LevelManager.getCurrentData().getLevelData());
-
+        GameOver = new GameOver(this);
     }
 
     private void startGameLoop() {
@@ -53,6 +57,8 @@ public class Game implements Runnable {
     }
 
     private void update() {
+        if (gameOver)   
+            return;
         player.update();
         EnemyManager.update(LevelManager.getCurrentData().getLevelData(), player);
         LevelManager.update();
@@ -63,6 +69,9 @@ public class Game implements Runnable {
         LevelManager.draw(g);
         player.render(g);
         EnemyManager.draw(g);
+
+        if (gameOver)   
+            GameOver.draw(g);
     }
 
     @Override
@@ -116,5 +125,18 @@ public class Game implements Runnable {
 
     public Player getPlayer() {
         return player;
+    }
+    
+    public void restartAll() {
+        // TODO reset player, level and enemies
+    }
+    
+    public void checkEnemyHit(Rectangle2D.Float attackBox) {
+        EnemyManager.checkEnemyHit(attackBox);
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+        
     }
 }
