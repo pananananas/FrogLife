@@ -8,11 +8,11 @@ import Main.Game;
 import static Utilities.HelpMethods.canMoveHere;
 public abstract class Enemy extends Entity {
 
-    private int enemyState, enemyType;
-    private int animationIndex, animationTick, animationSpeed = 25;
+    protected int enemyState, enemyType;
+    protected int animationIndex, animationTick, animationSpeed = 25;
 
-    private float walkSpeed = .5f * Game.ENEMY_SCALE;
-    private int walkDirection = LEFT;
+    protected float walkSpeed = .5f * Game.ENEMY_SCALE;
+    protected int walkDirection = LEFT;
 
     public Enemy(float x, float y, int width, int height, int enemyType) {
         super(x, y, width, height);
@@ -32,44 +32,37 @@ public abstract class Enemy extends Entity {
     }
 
     public void update(int[][] levelData) {
-        updateMove(levelData);
+        
         updateAnimationTick();
         
     }
 
-    private void updateMove(int[][] levelData) {
-
-        switch (enemyState) {
-            case IDLE:
-                enemyState = RUNNING;
-                break;
-        
-            case RUNNING:
-                float xSpeed = 0;
+    protected void move(int[][] levelData) {
+        float xSpeed = 0;
                 
-                if(walkDirection == LEFT) {
-                    xSpeed -= walkSpeed;
-                    if (canMoveHere(hitbox.x - xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
-                        hitbox.x += xSpeed;
-                        return;
-                    } 
-                } else {
-                    xSpeed += walkSpeed;
-                    if (canMoveHere(hitbox.x + width + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
-                        hitbox.x += xSpeed;
-                        return;
-                    } 
-                }
-
-                
-                changeWalkDir();
-
-                break;
-            default:
-                break;
+        if(walkDirection == LEFT) {
+            xSpeed -= walkSpeed;
+            if (canMoveHere(hitbox.x - xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
+                hitbox.x += xSpeed;
+                return;
+            } 
+        } else {
+            xSpeed += walkSpeed;
+            if (canMoveHere(hitbox.x + width + xSpeed, hitbox.y, hitbox.width, hitbox.height, levelData)) {
+                hitbox.x += xSpeed;
+                return;
+            } 
         }
-        
+        changeWalkDir();
     }
+
+    protected void changeState(int enemyState) {
+        this.enemyState = enemyState;
+        animationIndex = 0;
+        animationTick = 0;
+    }
+
+
 
     private void changeWalkDir() {
         if(walkDirection == LEFT) {
