@@ -56,6 +56,8 @@ public class Player extends Entity {
 
     private Rectangle2D.Float attackBox;
 
+    private int flipX = 0;
+    private int flipW = 1;
 
 
 
@@ -87,7 +89,13 @@ public class Player extends Entity {
     }
 
     public void render(Graphics g) {
-        g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset), (int) (hitbox.y - yDrawOffset), width, height, null);
+        g.drawImage(animations[playerAction][animationIndex], 
+                    (int) (hitbox.x - xDrawOffset) + flipX, 
+                    (int) (hitbox.y - yDrawOffset), 
+                    width * flipW, 
+                    height, 
+                    null);
+
         // drawHitbox(g);
         drawUI(g);
         drawAttackBox(g);
@@ -147,10 +155,20 @@ public class Player extends Entity {
         float xSpeed = 0;
         float ySpeed = 0;
     
-        if (left && !right)         xSpeed = -playerSpeed;
-        else if (right && !left)    xSpeed = playerSpeed;
-        if (up && !down)            ySpeed = -playerSpeed;
-        else if (down && !up)       ySpeed = playerSpeed;
+        if (left && !right) {        
+            xSpeed = -playerSpeed; 
+            flipX = width;
+            flipW = -1;
+        }
+        else if (right && !left) {    
+            xSpeed = playerSpeed;
+            flipX = 0;
+            flipW = 1;
+        }
+        if (up && !down)            
+            ySpeed = -playerSpeed;
+        else if (down && !up)       
+            ySpeed = playerSpeed;
         
         if (xSpeed != 0 && ySpeed != 0) {
             xSpeed /= 1.414f;
@@ -188,7 +206,7 @@ public class Player extends Entity {
 
         BufferedImage image = LoadSave.getSpriteAtlas(LoadSave.PLAYER_ATLAS);
 
-        animations = new BufferedImage[9][6];
+        animations = new BufferedImage[7][8];
 
         for ( int j = 0; j < animations.length; j++) 
             for (int i = 0; i < animations[j].length; i++) 

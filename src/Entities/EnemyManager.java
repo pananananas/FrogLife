@@ -38,7 +38,12 @@ public class EnemyManager {
 
     private void drawCrabbies(Graphics g) {
         for (Crabby c : crabbies) {
-            g.drawImage(crabbyArray[c.getEnemyState()][c.getAnimationIndex()], (int)c.getHitbox().x, (int)c.getHitbox().y, CRABBY_WIDTH, CRABBY_HEIGHT, null);
+            g.drawImage(crabbyArray[c.getEnemyState()][c.getAnimationIndex()], 
+                        (int)c.getHitbox().x + c.flipX(), 
+                        (int)c.getHitbox().y, 
+                        CRABBY_WIDTH * c.flipW(), 
+                        CRABBY_HEIGHT, 
+                        null);
         }
     }
 
