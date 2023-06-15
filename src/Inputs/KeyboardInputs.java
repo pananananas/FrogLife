@@ -4,6 +4,8 @@ import Main.GamePanel;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import org.w3c.dom.events.MouseEvent;
+
 public class KeyboardInputs implements KeyListener {
 
 
@@ -25,7 +27,8 @@ public class KeyboardInputs implements KeyListener {
             case KeyEvent.VK_S -> gamePanel.getGame().getPlayer().setDown(true);
             case KeyEvent.VK_D -> gamePanel.getGame().getPlayer().setRight(true);
         }
-
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) 
+            gamePanel.getGame().getPlayer().setAttack(true);    
     }
 
     @Override

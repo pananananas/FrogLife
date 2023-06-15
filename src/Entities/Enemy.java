@@ -97,13 +97,13 @@ public abstract class Enemy extends Entity {
     }
 
     protected boolean isPlayerInRange(Player player) {
-        float distanceFromPlayerX = Math.abs(player.hitbox.x - hitbox.x);
-        float distanceFromPlayerY = Math.abs(player.hitbox.y - hitbox.y);
+        float distanceFromPlayerX = Math.abs(player.hitbox.x + player.hitbox.width/2  - (hitbox.x + hitbox.width/2));
+        float distanceFromPlayerY = Math.abs(player.hitbox.y + player.hitbox.height/2 - (hitbox.y + hitbox.height/2));
         float distanceFromPlayer = (float) Math.sqrt(Math.pow(distanceFromPlayerX, 2) + Math.pow(distanceFromPlayerY, 2));
 
         return distanceFromPlayer <= sightDistance;
     }
-    
+
     protected boolean isPlayerInAttackRange(Player player) {
         float distanceFromPlayerX = Math.abs(player.hitbox.x - hitbox.x);
         float distanceFromPlayerY = Math.abs(player.hitbox.y - hitbox.y);

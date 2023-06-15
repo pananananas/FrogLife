@@ -1,6 +1,8 @@
 package Entities;
 
 import Utilities.LoadSave;
+
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -21,6 +23,23 @@ public class Player extends Entity {
 
     private float playerSpeed = 1f;
 
+    // StatusBarUI
+
+    private BufferedImage statusBarImage;
+
+    private int statusBarWidth  = (int) (192 * Game.SCALE);
+    private int statusBarHeight = (int) (58  * Game.SCALE);
+    private int statusBarX = (int) (10 * Game.SCALE);
+    private int statusBarY = (int) (10 * Game.SCALE);
+
+    private int healthBarWidth  = (int) (150 * Game.SCALE);
+    private int healthBarHeight = (int) ( 4  * Game.SCALE);
+    private int healthBarX = (int) (34 * Game.SCALE);
+    private int healthBarY = (int) (14 * Game.SCALE);
+
+    private int maxHealth = 100;
+    private int currentHealth = maxHealth;
+    private int healthWidth = healthBarWidth;
 
     private int [][] lvlData;
 
@@ -34,6 +53,7 @@ public class Player extends Entity {
 
     public void update() {
         
+        updateHealthBar();
         updateAnimationTick();
         setAnimation();
         updatePosition();
@@ -42,6 +62,17 @@ public class Player extends Entity {
     public void render(Graphics g) {
         g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset), (int) (hitbox.y - yDrawOffset), width, height, null);
         // drawHitbox(g);
+        drawUI(g);
+    }
+
+    private void drawUI(Graphics g) {
+        g.drawImage(statusBarImage, statusBarX, statusBarY, statusBarWidth, statusBarHeight, null);
+        g.setColor(Color.red);
+        g.fillRect(healthBarX + statusBarX, healthBarY + statusBarY, healthWidth, healthBarHeight);
+    }
+
+    private void updateHealthBar() {
+        healthWidth = (int) (healthBarWidth * ((float) currentHealth / maxHealth));
     }
 
     private void setAnimation() {
@@ -102,6 +133,19 @@ public class Player extends Entity {
             playerMoving = true;
         }
     }
+
+    public void changeHealth(int value) {
+        
+        currentHealth += value;
+
+        if (currentHealth > maxHealth) 
+            currentHealth = maxHealth;
+        
+        if (currentHealth <= 0) {
+            currentHealth = 0;
+            // gameOver();
+        }
+    }
     
     private void loadAnimations() {
 
@@ -112,6 +156,8 @@ public class Player extends Entity {
         for ( int j = 0; j < animations.length; j++) 
             for (int i = 0; i < animations[j].length; i++) 
                 animations[j][i] = image.getSubimage(i * spriteWidth, j * spriteHeight, spriteWidth, spriteHeight);
+
+        statusBarImage = LoadSave.getSpriteAtlas(LoadSave.STATUS_BAR);
     }
 
     public void loadLevelData(int[][] lvlData) {
