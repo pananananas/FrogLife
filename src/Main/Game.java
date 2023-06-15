@@ -67,9 +67,9 @@ public class Game implements Runnable {
     public void render(Graphics g) {
         
         LevelManager.draw(g);
-        player.render(g);
         EnemyManager.draw(g);
-
+        player.render(g);
+        
         if (gameOver)   
             GameOver.draw(g);
     }

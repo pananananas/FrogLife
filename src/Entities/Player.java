@@ -31,7 +31,7 @@ public class Player extends Entity {
     
     // Player movement
 
-    private float playerSpeed = 1f;
+    private float playerSpeed = 1.3f;
     private boolean left, right, up, down, playerMoving = false, playerAttacking = false;
 
 
@@ -112,13 +112,13 @@ public class Player extends Entity {
 
         // drawHitbox(g);
         drawUI(g);
-        drawAttackBox(g);
+        // drawAttackBox(g);
     }
 
-    private void drawAttackBox(Graphics g) {
-        g.setColor(Color.red);
-        g.drawRect((int) attackBox.x, (int) attackBox.y, (int) attackBox.width, (int) attackBox.height);
-    }
+    // private void drawAttackBox(Graphics g) {
+    //     g.setColor(Color.red);
+    //     g.drawRect((int) attackBox.x, (int) attackBox.y, (int) attackBox.width, (int) attackBox.height);
+    // }
 
     private void drawUI(Graphics g) {
         g.drawImage(statusBarImage, statusBarX, statusBarY, statusBarWidth, statusBarHeight, null);

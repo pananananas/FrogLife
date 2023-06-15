@@ -37,8 +37,8 @@ public class EnemyManager {
         drawCrabbies(g);
         for (Crabby c : crabbies) 
             if (c.isActive()) {
-                c.drawAttackBox(g);
-                c.drawHitbox(g);
+                // c.drawAttackBox(g);
+                // c.drawHitbox(g);
             }
     }
     
