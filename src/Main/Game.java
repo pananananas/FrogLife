@@ -54,7 +54,7 @@ public class Game implements Runnable {
 
     private void update() {
         player.update();
-        EnemyManager.update(LevelManager.getCurrentData().getLevelData());
+        EnemyManager.update(LevelManager.getCurrentData().getLevelData(), player);
         LevelManager.update();
     }
 
