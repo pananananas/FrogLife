@@ -1,3 +1,9 @@
+/**
+ * @file Enemy.java
+ * @brief This file contains the Enemy abstract class which forms the basis for enemy entities in the game.
+ */
+
+
 package Entities;
 
 import java.awt.Graphics;
@@ -8,6 +14,11 @@ import static Utilities.Constants.Directions.*;
 import Main.Game;
 import static Utilities.HelpMethods.canMoveHere;
 import static Utilities.HelpMethods.isSightClear;
+
+/**
+ * @class Enemy
+ * @brief This abstract class represents a general Enemy object in the game. It extends the Entity class.
+ */
 public abstract class Enemy extends Entity {
 
     protected int enemyState, enemyType;
@@ -23,6 +34,14 @@ public abstract class Enemy extends Entity {
     protected boolean acitve = true;
     protected boolean attackChecked = false;
 
+        /**
+     * @brief Enemy Constructor. Initializes the Enemy object and its hitbox.
+     * @param x X-position of the Enemy.
+     * @param y Y-position of the Enemy.
+     * @param width Width of the Enemy.
+     * @param height Height of the Enemy.
+     * @param enemyType Type of the Enemy.
+     */
     public Enemy(float x, float y, int width, int height, int enemyType) {
         super(x, y, width, height);
         this.enemyType = enemyType;
@@ -31,6 +50,10 @@ public abstract class Enemy extends Entity {
         currentHealth = maxHealth;
     }
 
+
+        /**
+     * @brief Updates the animation tick and index of the Enemy.
+     */
     protected void updateAnimationTick() {
         animationTick++;
         if (animationTick >= animationSpeed) {
@@ -47,12 +70,21 @@ public abstract class Enemy extends Entity {
         }
     }
 
+
+      /**
+     * @brief Updates the Enemy object's state and behavior.
+     * @param levelData Data about the current level.
+     */
     public void update(int[][] levelData) {
         
         // updateAnimationTick();
         
     }
 
+        /**
+     * @brief Makes the Enemy move in the level.
+     * @param levelData Data about the current level.
+     */
     protected void move(int[][] levelData) {
         float xSpeed = 0;
                 
@@ -72,18 +104,31 @@ public abstract class Enemy extends Entity {
         changeWalkDir();
     }
 
+        /**
+     * @brief Checks if the Enemy has hit the Player.
+     * @param attackBox The hitbox used for attacking.
+     * @param player The Player object.
+     */
     protected void checkEnemyHit(Rectangle2D.Float attackBox, Player player) {
         if (attackBox.intersects(player.hitbox)) 
             player.changeHealth(-getEnemyDamage(enemyType));
         attackChecked = true;
     }
 
+        /**
+     * @brief Changes the state of the Enemy.
+     * @param enemyState The new state for the Enemy.
+     */
     protected void newState(int enemyState) {
         this.enemyState = enemyState;
         animationIndex = 0;
         animationTick = 0;
     }
 
+            /**
+     * @brief Inflicts damage to the Enemy.
+     * @param damage Amount of damage to inflict.
+     */
     public void hurt(int damage) {
         currentHealth -= damage;
         if (currentHealth <= 0) {
@@ -94,6 +139,10 @@ public abstract class Enemy extends Entity {
         }
     }
 
+        /**
+     * @brief Makes the Enemy turn towards the Player.
+     * @param player The Player object.
+     */
     protected void turnTowardsPlayer(Player player) {
         if (player.hitbox.x < hitbox.x) {
             walkDirection = LEFT;
@@ -102,6 +151,12 @@ public abstract class Enemy extends Entity {
         }
     }
 
+       /**
+     * @brief Checks if the Enemy can see the Player.
+     * @param levelData Data about the current level.
+     * @param player The Player object.
+     * @return True if the Enemy can see the Player, false otherwise.
+     */
     protected boolean canSeePlayer(int[][] levelData, Player player) {
 
         int playerTileX = (int) player.getHitbox().x / Game.TILES_SIZE;
@@ -121,6 +176,12 @@ public abstract class Enemy extends Entity {
         return false;
     }
 
+
+        /**
+     * @brief Checks if the Player is in the Enemy's range.
+     * @param player The Player object.
+     * @return True if the Player is in range, false otherwise.
+     */
     protected boolean isPlayerInRange(Player player) {
         float distanceFromPlayerX = Math.abs(player.hitbox.x + player.hitbox.width/2  - (hitbox.x + hitbox.width/2));
         float distanceFromPlayerY = Math.abs(player.hitbox.y + player.hitbox.height/2 - (hitbox.y + hitbox.height/2));
@@ -129,6 +190,12 @@ public abstract class Enemy extends Entity {
         return distanceFromPlayer <= sightDistance;
     }
 
+
+        /**
+     * @brief Checks if the Player is in the Enemy's attack range.
+     * @param player The Player object.
+     * @return True if the Player is in attack range, false otherwise.
+     */
     protected boolean isPlayerInAttackRange(Player player) {
         float distanceFromPlayerX = Math.abs(player.hitbox.x - hitbox.x);
         float distanceFromPlayerY = Math.abs(player.hitbox.y - hitbox.y);
@@ -137,6 +204,9 @@ public abstract class Enemy extends Entity {
         return distanceFromPlayer <= attackDistance;
     }
 
+        /**
+     * @brief Changes the walking direction of the Enemy.
+     */
     private void changeWalkDir() {
         if(walkDirection == LEFT) {
             walkDirection = RIGHT;
@@ -145,6 +215,10 @@ public abstract class Enemy extends Entity {
         }
     }
 
+        /**
+     * @brief Renders the Enemy object.
+     * @param g Graphics object used to draw the object.
+     */
     public void render(Graphics g) {
 
     }

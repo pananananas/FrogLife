@@ -1,3 +1,8 @@
+/**
+ * @file EnemyManager.java
+ * @brief This file contains the EnemyManager class which manages all enemy objects in the game.
+ */
+
 package Entities;
 
 import java.awt.Graphics;
@@ -9,23 +14,44 @@ import Main.Game;
 import Utilities.LoadSave;
 import static Utilities.Constants.EnemyConstants.*;
 
+
+/**
+ * @class EnemyManager
+ * @brief This class manages all Enemy objects in the game.
+ */
 public class EnemyManager {
     
     private Game game;
     private BufferedImage[][] crabbyArray;
     private ArrayList<Crabby> crabbies = new ArrayList<>();
 
+
+        /**
+     * @brief EnemyManager Constructor. Initializes the EnemyManager object.
+     * @param game Instance of the Game class.
+     */
     public EnemyManager(Game game) {
         this.game = game;
         loadEnemyImages();
         addEnemies();
     }
 
+
+    
+    /**
+     * @brief Adds enemies to the game.
+     */
     private void addEnemies() {
         crabbies = LoadSave.getCrabs();
         System.out.println("Crabbs: "+crabbies.size());
     }
 
+
+       /**
+     * @brief Updates all enemies in the game.
+     * @param levelData Data about the current level.
+     * @param player The Player object.
+     */
     public void update(int[][] levelData, Player player) {
         for (Crabby c : crabbies) {
             if (c.isActive())
@@ -33,6 +59,11 @@ public class EnemyManager {
         }
     }
 
+
+        /**
+     * @brief Draws all enemies in the game.
+     * @param g Graphics object used to draw the object.
+     */
     public void draw(Graphics g) {
         drawCrabbies(g);
         for (Crabby c : crabbies) 
@@ -43,6 +74,10 @@ public class EnemyManager {
     }
     
 
+        /**
+     * @brief Draws all Crabby enemies in the game.
+     * @param g Graphics object used to draw the object.
+     */
     private void drawCrabbies(Graphics g) {
         for (Crabby c : crabbies) {
             if (c.isActive())
@@ -55,6 +90,11 @@ public class EnemyManager {
         }
     }
 
+      /**
+     * @brief Checks if any enemy has been hit.
+     * @param attackBox The hitbox used for attacking.
+     */
+
     public void checkEnemyHit(Rectangle2D.Float attackBox) {
         for (Crabby c : crabbies) {
             if (c.isActive())
@@ -65,6 +105,10 @@ public class EnemyManager {
         }
     }
 
+
+      /**
+     * @brief Loads all enemy images.
+     */
     private void loadEnemyImages() {
         crabbyArray = new BufferedImage[5][9];
         BufferedImage temp = LoadSave.getSpriteAtlas(LoadSave.CRAB_ATLAS);

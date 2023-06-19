@@ -1,3 +1,9 @@
+/**
+ * @file Player.java
+ * @brief This file contains the Player class, which represents the main character in the game.
+ */
+
+
 package Entities;
 
 import Utilities.LoadSave;
@@ -12,6 +18,12 @@ import Main.Game;
 import static Utilities.Constants.PlayerConstants.*;
 import static Utilities.HelpMethods.canMoveHere;
 
+
+/**
+ * @class Player
+ * @brief This class represents the player in the game.
+ * This class is responsible for player movement, attack, and UI display.
+ */
 public class Player extends Entity {
     
     private int [][] lvlData;
@@ -62,7 +74,14 @@ public class Player extends Entity {
     private int flipW = 1;
 
     
-
+        /**
+     * @brief Player constructor.
+     * @param x The x-coordinate for the player.
+     * @param y The y-coordinate for the player.
+     * @param width The width of the player.
+     * @param height The height of the player.
+     * @param game A reference to the Game object.
+     */
     public Player(float x, float y, int width, int height, Game game) {
         super(x, y, width, height);
         this.game = game;
@@ -71,6 +90,10 @@ public class Player extends Entity {
         initAttackBox();
     }
 
+        /**
+     * @brief Updates the state of the player.
+     * This includes health, attack box position, animation, position, and checking attack.
+     */
     public void update() {
         if (currentHealth <= 0) {
             game.setGameOver(true);
@@ -102,6 +125,10 @@ public class Player extends Entity {
         attackBox.y = hitbox.y + (int) (10 * Game.PLAYER_SCALE);
     }
 
+       /**
+     * @brief Renders the player on the screen.
+     * @param g Graphics object used to draw the player.
+     */
     public void render(Graphics g) {
         g.drawImage(animations[playerAction][animationIndex], 
                     (int) (hitbox.x - xDrawOffset) + flipX, 
@@ -207,6 +234,10 @@ public class Player extends Entity {
         }
     }
 
+       /**
+     * @brief Changes the health of the player.
+     * @param value The amount to change the health by (can be negative to decrease health).
+     */
     public void changeHealth(int value) {
 
         currentHealth += value;
