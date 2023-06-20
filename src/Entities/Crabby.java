@@ -89,8 +89,10 @@ public class Crabby extends Enemy {
         
             case RUNNING:
                 move(levelData);
-                if(canSeePlayer(levelData, player))
+                if(canSeePlayer(levelData, player)) {
                     turnTowardsPlayer(player);
+                    walkSpeed = (float) (0.5 * Game.ENEMY_SCALE);
+                }
                 if (isPlayerInAttackRange(player))
                     newState(ATTACK);
             break;

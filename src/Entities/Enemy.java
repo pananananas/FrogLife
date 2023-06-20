@@ -164,13 +164,13 @@ public abstract class Enemy extends Entity {
 
         int enemyTileX = (int) hitbox.x / Game.TILES_SIZE;
         int enemyTileY = (int) hitbox.y / Game.TILES_SIZE;
-        if (playerTileY == enemyTileY) {
+        if (playerTileY == enemyTileY || playerTileY - 1 == enemyTileY || playerTileY + 1 == enemyTileY ) {
             if (isPlayerInRange(player)) {
                 System.out.println("Player in range");
-                if (isSightClear(levelData, hitbox, player.hitbox, enemyTileY)) {
-                    System.out.println("Sight clear");
-                    return true;
-                }
+                // if (isSightClear(levelData, hitbox, player.hitbox, enemyTileY)) {
+                    // System.out.println("Sight clear");
+                return true;
+                // }
             }
         }
         return false;
@@ -186,8 +186,8 @@ public abstract class Enemy extends Entity {
         float distanceFromPlayerX = Math.abs(player.hitbox.x + player.hitbox.width/2  - (hitbox.x + hitbox.width/2));
         float distanceFromPlayerY = Math.abs(player.hitbox.y + player.hitbox.height/2 - (hitbox.y + hitbox.height/2));
         float distanceFromPlayer = (float) Math.sqrt(Math.pow(distanceFromPlayerX, 2) + Math.pow(distanceFromPlayerY, 2));
-
-        return distanceFromPlayer <= sightDistance;
+        System.out.println("Distance from player: " + distanceFromPlayer);
+        return distanceFromPlayer <= 500;
     }
 
 
