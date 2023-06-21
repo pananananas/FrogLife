@@ -1,11 +1,28 @@
+/**
+ * @file GameWindow.java
+ * @brief Represents the game window where the game is rendered.
+ * Implements the WindowFocusListener interface to handle window focus events.
+ *
+ */
+
 package Main;
 
 import java.awt.event.WindowFocusListener;
 
 import javax.swing.*;
 
+/**
+ * @class GameWindow
+ * @brief Represents the game window where the game is rendered.
+ * Implements the WindowFocusListener interface to handle window focus events.
+ */
 public class GameWindow {
     private JFrame jframe;
+
+    /**
+     * @brief Constructs a GameWindow object with the specified GamePanel.
+     * @param gamePanel The GamePanel associated with the game window.
+     */
     public GameWindow(GamePanel gamePanel) {
         jframe = new JFrame("Frog life");
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

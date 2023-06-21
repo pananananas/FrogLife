@@ -1,3 +1,7 @@
+/**
+ * @file LevelManager.java
+ * @brief Manages game levels and their rendering.
+ */
 package Levels;
 
 import java.awt.Graphics;
@@ -7,6 +11,10 @@ import Main.Game;
 import Utilities.LoadSave;
 import static Main.Game.TILES_SIZE;
 
+/**
+ * @class LevelManager
+ * @brief Manages game levels and their rendering.
+ */
 public class LevelManager {
     
     private Game game;
@@ -14,6 +22,10 @@ public class LevelManager {
     private Level levelOne;
     BufferedImage bgImage;
 
+        /**
+     * @brief Constructs a LevelManager object with the specified Game.
+     * @param game The Game associated with the level manager.
+     */
     public LevelManager(Game game) {
         this.game = game;
         importOutsideSprites();
@@ -21,6 +33,9 @@ public class LevelManager {
         levelOne = new Level(LoadSave.getLevelData());
     }
 
+        /**
+     * @brief Imports external sprites for the level.
+     */
     private void importOutsideSprites() {
 
         BufferedImage tmpImage = LoadSave.getSpriteAtlas(LoadSave.LEVEL_ATLAS);
@@ -36,6 +51,10 @@ public class LevelManager {
         }
     }
 
+       /**
+     * @brief Draws the level and background image.
+     * @param g The Graphics object used for rendering.
+     */
     public void draw(Graphics g) {
         g.drawImage(bgImage, 0, 0, Game.GAME_HEIGHT, Game.GAME_WIDTH, null);
         for (int j = 0; j < Game.TILES_IN_HEIGHT; j++) 
@@ -45,9 +64,17 @@ public class LevelManager {
             }
     }
 
+        /**
+     * @brief Updates the level.
+     */
     public void update() {
         
     }
+
+      /**
+     * @brief Gets the current level data.
+     * @return The current level data.
+     */
     public Level getCurrentData() {
         return levelOne;
     }

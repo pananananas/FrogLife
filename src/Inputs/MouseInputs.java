@@ -1,9 +1,20 @@
+/**
+ * @file MouseInputs.java
+ * @brief Handles mouse inputs for the game.
+ *
+ */
+
 package Inputs;
 import Main.GamePanel;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+/**
+ * @class MouseInputs
+ * @brief Implements the MouseListener and MouseMotionListener interfaces to handle mouse inputs.
+ * This class is responsible for handling mouse inputs for the game.
+ */
 public class MouseInputs implements MouseListener, MouseMotionListener {
 
     private GamePanel gamePanel;

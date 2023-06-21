@@ -1,3 +1,8 @@
+/**
+ * @file Game.java
+ * @brief Represents the main game class that manages the game loop and game components.
+ */
+
 package Main;
 
 import java.awt.Graphics;
@@ -7,6 +12,12 @@ import Entities.EnemyManager;
 import Entities.Player;
 import Levels.LevelManager;
 
+
+/**
+ * @class Game
+ * @brief Represents the main game class that manages the game loop and game components.
+ * Implements the Runnable interface for the game loop.
+ */
 public class Game implements Runnable {
     private GameWindow gameWindow;
     private GamePanel gamePanel;
@@ -31,6 +42,9 @@ public class Game implements Runnable {
 
     private boolean gameOver = false;
     
+     /**
+     * @brief Constructs a Game object and initializes game components.
+     */
     public Game() {
         initClasses();
 
@@ -41,6 +55,9 @@ public class Game implements Runnable {
         startGameLoop();
     }
 
+       /**
+     * @brief Initializes game components.
+     */
     private void initClasses() {
         LevelManager = new LevelManager(this);
         EnemyManager = new EnemyManager(this);
@@ -49,6 +66,9 @@ public class Game implements Runnable {
         GameOver = new GameOver(this);
     }
 
+    /**
+     * @brief Starts the game loop.
+     */
     private void startGameLoop() {
         if (gameLoopThread == null) {
             gameLoopThread = new Thread(this);
@@ -56,6 +76,9 @@ public class Game implements Runnable {
         }
     }
 
+        /**
+     * @brief Updates the game components.
+     */
     private void update() {
         if (gameOver)   
             return;
@@ -64,6 +87,10 @@ public class Game implements Runnable {
         LevelManager.update();
     }
 
+      /**
+     * @brief Renders the game components.
+     * @param g The Graphics object used for rendering.
+     */
     public void render(Graphics g) {
         
         LevelManager.draw(g);
@@ -123,18 +150,33 @@ public class Game implements Runnable {
         }
     }
 
+       /**
+     * @brief Retrieves the player object.
+     * @return The player object.
+     */
     public Player getPlayer() {
         return player;
     }
-    
+
+        /**
+     * @brief Restarts the game by resetting player, level, and enemies.
+     */
     public void restartAll() {
         // TODO reset player, level and enemies
     }
-    
+
+       /**
+     * @brief Checks for enemy hit based on the provided attack box.
+     * @param attackBox The attack box rectangle.
+     */
     public void checkEnemyHit(Rectangle2D.Float attackBox) {
         EnemyManager.checkEnemyHit(attackBox);
     }
 
+        /**
+     * @brief Sets the game over status.
+     * @param gameOver The game over status.
+     */
     public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
         

@@ -1,3 +1,7 @@
+/**
+ * @file LoadSave.java
+ * @brief Provides methods for loading and saving game resources and data.
+ */
 package Utilities;
 
 import java.awt.Color;
@@ -13,6 +17,10 @@ import Main.Game;
 
 import static Utilities.Constants.EnemyConstants.*;
 
+/**
+ * @class LoadSave
+ * @brief Provides methods for loading and saving game resources and data.
+ */
 public class LoadSave {
 
 
@@ -23,6 +31,11 @@ public class LoadSave {
     public static final String CRAB_ATLAS  = "crabby_sprite.png";
     public static final String STATUS_BAR  = "health_bar.png";
     
+       /**
+     * @brief Retrieves the sprite atlas image for the specified file name.
+     * @param fileName The file name of the sprite atlas.
+     * @return The BufferedImage object representing the sprite atlas.
+     */
     public static BufferedImage getSpriteAtlas(String fileName) {
         BufferedImage image = null;
         InputStream is = LoadSave.class.getResourceAsStream("/Resources/" + fileName);
@@ -41,6 +54,10 @@ public class LoadSave {
         return image;
     }
 
+        /**
+     * @brief Retrieves a list of Crabby entities from the level data.
+     * @return The list of Crabby entities.
+     */
     public static ArrayList<Crabby> getCrabs() {
         BufferedImage image = getSpriteAtlas(LEVEL_ONE_DATA);
         ArrayList<Crabby> list = new ArrayList<>();
@@ -56,6 +73,10 @@ public class LoadSave {
     }
 
 
+       /**
+     * @brief Retrieves the level data as a 2D array.
+     * @return The level data as a 2D array.
+     */
     public static int[][] getLevelData() {
         int [][] lvlData = new int [Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
         BufferedImage image = getSpriteAtlas(LEVEL_ONE_DATA);

@@ -1,7 +1,20 @@
+/**
+ * @file Constants.java
+ * @brief Contains constant values used in the game.
+ */
+
 package Utilities;
 import Main.Game;
+/**
+ * @class Constants
+ * @brief Contains constant values used in the game.
+ */
 public class Constants {
     
+        /**
+     * @class Directions
+     * @brief Contains constant values for directions.
+     */
     public static class Directions {
         public static final int LEFT = 0;
         public static final int UP = 1;
@@ -9,6 +22,10 @@ public class Constants {
         public static final int DOWN = 3;
     }
 
+       /**
+     * @class PlayerConstants
+     * @brief Contains constant values for player actions.
+     */
     public static class PlayerConstants {
         public static final int IDLE = 0;
         public static final int RUNNING = 1;
@@ -18,6 +35,11 @@ public class Constants {
         public static final int HIT = 5;
         public static final int DEAD = 6;
 
+             /**
+         * @brief Retrieves the number of sprites for the given player action.
+         * @param playerAction The player action constant.
+         * @return The number of sprites for the player action.
+         */
         public static int getSpriteAmount(int playerAction) { 
 
             switch (playerAction) {
@@ -49,6 +71,10 @@ public class Constants {
         }
     }
 
+      /**
+     * @class EnemyConstants
+     * @brief Contains constant values for enemy actions and properties.
+     */
     public static class EnemyConstants {
 
         public static final int CRABBY = 0;
@@ -69,6 +95,12 @@ public class Constants {
         public static final int CRABBY_DRAWOFFSET_X = (int) (26*Game.ENEMY_SCALE);
         public static final int CRABBY_DRAWOFFSET_Y = (int) (9*Game.ENEMY_SCALE);
 
+           /**
+         * @brief Retrieves the number of sprites for the given enemy type and state.
+         * @param enemyType The enemy type constant.
+         * @param enemyState The enemy state constant.
+         * @return The number of sprites for the enemy type and state.
+         */
         public static int getSpriteAmount(int enemyType, int enemyState) {
             switch (enemyType) {
                 case CRABBY -> {
@@ -100,6 +132,11 @@ public class Constants {
 
         }
         
+                /**
+         * @brief Retrieves the maximum health for a given enemy type.
+         * @param enemyType The enemy type constant.
+         * @return The maximum health for the enemy type.
+         */
         public static int getMaxHealth(int enemyType) {
             switch (enemyType) {
                 case CRABBY -> {
@@ -111,6 +148,11 @@ public class Constants {
             }
         }
 
+              /**
+         * @brief Retrieves the enemy damage for a given enemy type.
+         * @param enemyType The enemy type constant.
+         * @return The enemy damage for the enemy type.
+         */
         public static int getEnemyDamage(int enemyType) {
             switch (enemyType) {
                 case CRABBY -> {

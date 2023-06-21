@@ -28,7 +28,7 @@ public class Crabby extends Enemy {
     // private int attackBoxOffsetY = (int) (10 * Game.ENEMY_SCALE);
 
 
-        /**
+    /**
      * @brief Crabby Constructor. Initializes Crabby object and its hitbox.
      * @param x X-position of Crabby.
      * @param y Y-position of Crabby.
@@ -117,7 +117,7 @@ public class Crabby extends Enemy {
         }
     }
 
-        /**
+    /**
      * @brief Calculates horizontal flipping point.
      * @return Horizontal flipping point based on walking direction.
      */

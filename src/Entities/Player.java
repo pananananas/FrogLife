@@ -147,16 +147,29 @@ public class Player extends Entity {
     //     g.drawRect((int) attackBox.x, (int) attackBox.y, (int) attackBox.width, (int) attackBox.height);
     // }
 
+    /**
+     * @brief Draws the player's UI.
+     * @param g Graphics object used to draw the UI.
+     * The UI consists of the status bar and health bar.
+     * The health bar is drawn on top of the status bar.
+     * The health bar width is determined by the player's current health.
+     */
     private void drawUI(Graphics g) {
         g.drawImage(statusBarImage, statusBarX, statusBarY, statusBarWidth, statusBarHeight, null);
         g.setColor(Color.red);
         g.fillRect(healthBarX + statusBarX, healthBarY + statusBarY, healthWidth, healthBarHeight);
     }
-
+    /**
+     * @brief Draws the player's hitbox.
+     */
     private void updateHealthBar() {
         healthWidth = (int) (healthBarWidth * ((float) currentHealth / maxHealth));
     }
 
+    /**
+     * @brief Draws the player's hitbox.
+     * @param g Graphics object used to draw the hitbox.
+     */
     private void setAnimation() {
     
         int startAnimation = playerAction;
@@ -177,6 +190,9 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * @brief Loads the player's animations.
+     */
     private void updateAnimationTick() {
         animationTick++;
         if (animationTick >= animationSpeed) {
@@ -190,11 +206,17 @@ public class Player extends Entity {
         }
     }
     
+    /**
+     * @brief Loads the player's animations.
+     */
     private void resetAnimationTick() {
         animationTick = 0;
         animationIndex = 0;
     }
 
+    /**
+     * @brief Loads the player's animations.
+     */
     private void updatePosition() {
 
         if (!left && !right && !up && !down) {
@@ -251,6 +273,9 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * @brief Initializes the hitbox of the player.
+     */
     protected void initAttackBox() {
         attackBox = new Rectangle2D.Float(x, y, (int) (20 * Game.PLAYER_SCALE), (int) (20 * Game.PLAYER_SCALE));
     }

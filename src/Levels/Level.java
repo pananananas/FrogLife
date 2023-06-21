@@ -1,5 +1,16 @@
+/**
+ * @file Level.java
+ * @brief This file contains the Level class, which represents a level in the game.
+ * 
+ */
+
 package Levels;
 
+/**
+ * @class Level
+ * @brief This class represents a level in the game.
+ * This class is responsible for storing the level data.
+ */
 public class Level {
 
 
